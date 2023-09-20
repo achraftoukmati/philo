@@ -1,4 +1,4 @@
-#include"philo.h"
+#include "philo.h"
 
 int	ft_atoi(const char *str)
 {
@@ -9,8 +9,9 @@ int	ft_atoi(const char *str)
 	i = 0;
 	sing = 1;
 	rest = 0;
-	while ((str[i] == '\f' || str[i] == '\t' || str[i] == ' '
-			|| str[i] == '\n' || str[i] == '\r' || str[i] == '\v'))
+	while ((str[i] == '\f' || str[i] == '\t'
+			|| str[i] == ' ' || str[i] == '\n'
+			|| str[i] == '\r' || str[i] == '\v'))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
@@ -29,17 +30,18 @@ int	ft_isdigit(int d)
 	return (0);
 }
 
-int ft_space(char c)
+int	ft_space(char c)
 {
-    if(c == '\f' || c == '\t' || c == ' ' || c == '\n' || c == '\r' || c == '\v')
-        return(1);
-    return(0);
+	if (c == '\f' || c == '\t' || c == ' ' || c == '\n' || c == '\r'
+		|| c == '\v')
+		return (1);
+	return (0);
 }
 
-unsigned long get_time(void)
+unsigned long	get_time(void)
 {
 	struct timeval	time;
-	if (gettimeofday(&time, NULL) == -1)
-		write(2, "gettimeofday() error\n", 22);
-	return ((time.tv_sec * 1000 )+( time.tv_usec / 1000));
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
