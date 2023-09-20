@@ -13,7 +13,6 @@ int	check_input_chars(int ac, char **av)
 {
 	int	i;
 	int	j;
-	int	d;
 
 	i = 1;
 	if (ac != 5 && ac != 6)
@@ -21,17 +20,19 @@ int	check_input_chars(int ac, char **av)
 	while (i < ac)
 	{
 		j = 0;
-		d = 0;
+		while (ft_space(av[i][j]))
+			j++;
 		while (av[i][j] != '\0')
 		{
-			if (!ft_isdigit(av[i][j]) && !ft_space(av[i][j]))
-				return (0);
-			if (ft_isdigit(av[i][j]))
-				d++;
+			if (!ft_isdigit(av[i][j]))
+			{
+				while (ft_space(av[i][j]))
+					j++;
+				if ((av[i][j]) != '\0')
+					return (0);
+			}
 			j++;
 		}
-		if (d == 0)
-			return (0);
 		i++;
 	}
 	return (1);
