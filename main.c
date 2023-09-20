@@ -9,30 +9,40 @@ int	check_input(t_data *input)
 	return (1);
 }
 
+int	check_string(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (ft_space(s[i]))
+		i++;
+	if (s[i] == '+')
+		i++;
+	while (s[i] != '\0')
+	{
+		if (!ft_isdigit(s[i]))
+		{
+			while (ft_space(s[i]))
+				i++;
+			if (s[i] != '\0')
+				return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 int	check_input_chars(int ac, char **av)
 {
 	int	i;
-	int	j;
 
 	i = 1;
 	if (ac != 5 && ac != 6)
 		return (0);
 	while (i < ac)
 	{
-		j = 0;
-		while (ft_space(av[i][j]))
-			j++;
-		while (av[i][j] != '\0')
-		{
-			if (!ft_isdigit(av[i][j]))
-			{
-				while (ft_space(av[i][j]))
-					j++;
-				if ((av[i][j]) != '\0')
-					return (0);
-			}
-			j++;
-		}
+		if (!check_string(av[i]))
+			return (0);
 		i++;
 	}
 	return (1);
@@ -54,31 +64,6 @@ int	get_data(t_data *input, int ac, char **av)
 		input->meals_n = 0;
 		input->flag = 0;
 		return (check_input(input));
-	}
-	return (0);
-}
-
-int	check_data(t_data *input)
-{
-	int	i;
-
-	i = 0;
-	while (input->dead == 0)
-	{
-		if (input->flag == 1)
-		{
-			if (get_time()
-				- input->philos[i].time_now >= (unsigned long)input->t_die)
-			{
-				input->dead = 1;
-				printf("%ld %d died\n", (get_time()
-						- input->philos[i].time_now), input->philos[i].id);
-				return (0);
-			}
-			i++;
-			if (i == input->n_philos)
-				i = 0;
-		}
 	}
 	return (0);
 }

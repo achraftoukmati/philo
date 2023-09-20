@@ -56,5 +56,6 @@ int					init_philos(t_data *data);
 int					error(t_data *data, char *msg);
 void				mutex_destroy(t_data *data);
 void				*routing(void *arg);
+int					check_data(t_data *input);
 
 #endif

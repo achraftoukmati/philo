@@ -10,6 +10,31 @@ void	free_all(t_data *data)
 		free(data->philos);
 }
 
+int	check_data(t_data *input)
+{
+	int	i;
+
+	i = 0;
+	while (input->dead == 0)
+	{
+		if (input->flag == 1)
+		{
+			if (get_time()
+				- input->philos[i].time_now >= (unsigned long)input->t_die)
+			{
+				input->dead = 1;
+				printf("%ld %d died\n", (get_time()
+						- input->philos[i].time_now), input->philos[i].id);
+				return (0);
+			}
+			i++;
+			if (i == input->n_philos)
+				i = 0;
+		}
+	}
+	return (0);
+}
+
 int	error(t_data *data, char *msg)
 {
 	int	i;
