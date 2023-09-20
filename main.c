@@ -2,9 +2,9 @@
 
 int	check_input(t_data *input)
 {
-	if ((input->food_access < 0 && input->food_access != NO_PAR)
-		|| input->n_philos <= 0 || input->t_die < 0 || input->t_eat < 0
-		|| input->t_sleep < 0)
+	if ((input->food_access <= 0 && input->food_access != NO_PAR)
+		|| input->n_philos <= 0 || input->t_die <= 0 || input->t_eat <= 0
+		|| input->t_sleep <= 0)
 		return (0);
 	return (1);
 }
