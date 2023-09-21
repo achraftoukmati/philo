@@ -40,7 +40,7 @@ void	*routing(void *arg)
 	data->time_now = data->start;
 	pthread_mutex_unlock(&data->meals_mutex);
 	if (data->id % 2 == 0)
-		usleep(data->tt_eat * 1000);
+		usleep(100);
 	while (not_dead(data))
 	{
 		if (data->meals_n == data->meals_max && data->meals_max > 0)
