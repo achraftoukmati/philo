@@ -63,11 +63,10 @@ int	get_data(t_data *input, int ac, char **av)
 		input->dead = 0;
 		input->meals_n = 0;
 		input->flag = 0;
-		pthread_mutex_init(&input->print_mutex,NULL);
-		pthread_mutex_init(&input->dead_mutex,NULL);
+		pthread_mutex_init(&input->print_mutex, NULL);
+		pthread_mutex_init(&input->dead_mutex, NULL);
 		return (check_input(input));
 	}
-
 	return (0);
 }
 

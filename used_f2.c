@@ -12,30 +12,31 @@ void	free_all(t_data *data)
 
 int	check_data(t_data *input)
 {
-	t_philo *philo ;
-	int	i;
-	unsigned long last_meal;
+	t_philo			*philo;
+	int				i;
+	unsigned long	last_meal;
+
 	i = 0;
 	while (input->dead == 0)
-	{	
-			usleep(input->t_eat * 100);
-			philo = &input->philos[i];
-			pthread_mutex_lock(&philo->meals_mutex);
-			last_meal = get_time() - input->philos[i].time_now;
-			pthread_mutex_unlock(&philo->meals_mutex);
-			if ( last_meal >= (unsigned long)input->t_die)
-			{
-				pthread_mutex_lock(&input->dead_mutex);
-				input->dead = 1;
-				pthread_mutex_unlock(&input->dead_mutex);	
-				pthread_mutex_lock(&input->print_mutex);
-				printf("%ld %d died\n", last_meal, philo->id);
-				pthread_mutex_unlock(&input->print_mutex);
-				return (0);
-			}
-			i++;
-			if (i == input->n_philos)
-				i = 0;
+	{
+		usleep(input->t_eat * 100);
+		philo = &input->philos[i];
+		pthread_mutex_lock(&philo->meals_mutex);
+		last_meal = get_time() - input->philos[i].time_now;
+		pthread_mutex_unlock(&philo->meals_mutex);
+		if (last_meal >= (unsigned long)input->t_die)
+		{
+			pthread_mutex_lock(&input->dead_mutex);
+			input->dead = 1;
+			pthread_mutex_lock(&input->print_mutex);
+			printf("%ld %d died\n", last_meal, philo->id);
+			pthread_mutex_unlock(&input->print_mutex);
+			pthread_mutex_unlock(&input->dead_mutex);
+			return (0);
+		}
+		i++;
+		if (i == input->n_philos)
+			i = 0;
 	}
 	return (0);
 }
@@ -67,17 +68,16 @@ void	mutex_destroy(t_data *data)
 	}
 	pthread_mutex_destroy(&data->print_mutex);
 	pthread_mutex_destroy(&data->dead_mutex);
-
-	
 }
 
-int not_dead(t_philo *philo)
+int	not_dead(t_philo *philo)
 {
-	int ret;
+	int	ret;
+
 	ret = 1;
 	pthread_mutex_lock(philo->dead_mutex);
-		if(*philo->s == 1)
-			ret = 0;
+	if (*philo->s == 1)
+		ret = 0;
 	pthread_mutex_unlock(philo->dead_mutex);
-	return(ret);
+	return (ret);
 }

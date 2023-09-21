@@ -23,9 +23,7 @@ void	eating(t_philo *philo)
 
 void	sleeping(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->meals_mutex);
-	philo->time_now = get_time();
-	pthread_mutex_unlock(&philo->meals_mutex);
+
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
 	printing("is sleeping", philo);
@@ -38,8 +36,9 @@ void	*routing(void *arg)
 	t_philo	*data;
 
 	data = arg;
-
+	pthread_mutex_lock(&data->meals_mutex);
 	data->time_now = data->start;
+	pthread_mutex_unlock(&data->meals_mutex);
 	if (data->id % 2 == 0)
 		usleep(data->tt_eat * 1000);
 	while (not_dead(data))
@@ -49,7 +48,10 @@ void	*routing(void *arg)
 		thinking(data);
 		if (data->n_philos == 1)
 			break ;
-		eating(data);
+		eating(data);	
+		pthread_mutex_lock(&data->meals_mutex);
+		data->time_now = get_time();
+		pthread_mutex_unlock(&data->meals_mutex);
 		sleeping(data);
 		data->meals_n++;
 	}

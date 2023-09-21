@@ -17,11 +17,8 @@ void	philo(t_philo *philo, t_data *data, int i)
 	philo->right_fork = &data->forks[(i + 1) % data->n_philos];
 	philo->dead_mutex = &data->dead_mutex;
 	philo->print_mutex = &data->print_mutex;
-	pthread_mutex_init(&philo->meals_mutex,NULL);
-	pthread_mutex_init(&philo->flag_mutex,NULL);
-
-
-
+	pthread_mutex_init(&philo->meals_mutex, NULL);
+	// pthread_mutex_init(&philo->flag_mutex,NULL);
 }
 
 int	init_philos(t_data *data)
@@ -54,7 +51,6 @@ void	printing(char *s, t_philo *data)
 		pthread_mutex_lock(data->print_mutex);
 		printf("%ld %d %s\n", (get_time() - data->start), data->id, s);
 		pthread_mutex_unlock(data->print_mutex);
-
 	}
 }
 
