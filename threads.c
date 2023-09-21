@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	fill(t_philo *philo, t_data *data, int i)
+void	philo(t_philo *philo, t_data *data, int i)
 {
 	philo->id = i + 1;
 	philo->n_philos = data->n_philos;
@@ -15,6 +15,13 @@ void	fill(t_philo *philo, t_data *data, int i)
 	philo->meals_max = data->food_access;
 	philo->left_fork = &data->forks[i];
 	philo->right_fork = &data->forks[(i + 1) % data->n_philos];
+	philo->dead_mutex = &data->dead_mutex;
+	philo->print_mutex = &data->print_mutex;
+	pthread_mutex_init(&philo->meals_mutex,NULL);
+	pthread_mutex_init(&philo->flag_mutex,NULL);
+
+
+
 }
 
 int	init_philos(t_data *data)
@@ -33,9 +40,8 @@ int	init_philos(t_data *data)
 		return (1);
 	while (i < data->n_philos)
 	{
-		fill(&data->philos[i], data, i);
-		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
-			return (1);
+		philo(&data->philos[i], data, i);
+		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
 	return (0);
@@ -43,9 +49,12 @@ int	init_philos(t_data *data)
 
 void	printing(char *s, t_philo *data)
 {
-	if (*data->s == 0)
+	if (not_dead(data))
 	{
+		pthread_mutex_lock(data->print_mutex);
 		printf("%ld %d %s\n", (get_time() - data->start), data->id, s);
+		pthread_mutex_unlock(data->print_mutex);
+
 	}
 }
 

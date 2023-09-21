@@ -26,6 +26,11 @@ typedef struct s_philo
 	int				meals_n;
 	int				*flag;
 	int				*s;
+	pthread_mutex_t *print_mutex;
+	pthread_mutex_t *dead_mutex;
+	pthread_mutex_t meals_mutex;
+	pthread_mutex_t flag_mutex;
+	
 }					t_philo;
 
 typedef struct s_data
@@ -40,6 +45,8 @@ typedef struct s_data
 	t_philo			*philos;
 	pthread_t		*threads;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t print_mutex;
+	pthread_mutex_t dead_mutex;
 	int				meals_n;
 
 }					t_data;
@@ -57,5 +64,6 @@ int					error(t_data *data, char *msg);
 void				mutex_destroy(t_data *data);
 void				*routing(void *arg);
 int					check_data(t_data *input);
+int 				not_dead(t_philo *philo);
 
 #endif
