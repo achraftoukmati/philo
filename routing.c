@@ -23,7 +23,6 @@ void	eating(t_philo *philo)
 
 void	sleeping(t_philo *philo)
 {
-
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
 	printing("is sleeping", philo);
@@ -53,7 +52,10 @@ void	*routing(void *arg)
 		data->time_now = get_time();
 		pthread_mutex_unlock(&data->meals_mutex);
 		sleeping(data);
+		// check_data(data->data_ptr);
 		data->meals_n++;
+		// if(not_dead(data))
+		// 	check_data(data->data_ptr);
 	}
 	return (NULL);
 }

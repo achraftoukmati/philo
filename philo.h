@@ -9,6 +9,7 @@
 # include <unistd.h>
 
 # define NO_PAR -1
+struct s_data;
 
 typedef struct s_philo
 {
@@ -30,6 +31,7 @@ typedef struct s_philo
 	pthread_mutex_t *dead_mutex;
 	pthread_mutex_t meals_mutex;
 	pthread_mutex_t flag_mutex;
+	struct s_data	*data_ptr;
 	
 }					t_philo;
 

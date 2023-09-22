@@ -18,7 +18,7 @@ void	philo(t_philo *philo, t_data *data, int i)
 	philo->dead_mutex = &data->dead_mutex;
 	philo->print_mutex = &data->print_mutex;
 	pthread_mutex_init(&philo->meals_mutex, NULL);
-	// pthread_mutex_init(&philo->flag_mutex,NULL);
+	philo->data_ptr = data;
 }
 
 int	init_philos(t_data *data)

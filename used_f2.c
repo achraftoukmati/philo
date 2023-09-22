@@ -19,7 +19,7 @@ int	check_data(t_data *input)
 	i = 0;
 	while (input->dead == 0)
 	{
-		usleep(input->t_eat * 100);
+		usleep(50);
 		philo = &input->philos[i];
 		pthread_mutex_lock(&philo->meals_mutex);
 		last_meal = get_time() - input->philos[i].time_now;
@@ -27,11 +27,12 @@ int	check_data(t_data *input)
 		if (last_meal >= (unsigned long)input->t_die)
 		{
 			pthread_mutex_lock(&input->dead_mutex);
-			input->dead = 1;
+			input->dead = 1;			
+			pthread_mutex_unlock(&input->dead_mutex);
 			pthread_mutex_lock(&input->print_mutex);
 			printf("%ld %d died\n", last_meal, philo->id);
 			pthread_mutex_unlock(&input->print_mutex);
-			pthread_mutex_unlock(&input->dead_mutex);
+
 			return (0);
 		}
 		i++;
