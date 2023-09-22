@@ -9,7 +9,8 @@ int	ft_atoi(const char *str)
 	i = 0;
 	sing = 1;
 	rest = 0;
-	while ((str[i] == '\f' || str[i] == '\t' || str[i] == ' ' || str[i] == '\n'
+	while ((str[i] == '\f' || str[i] == '\t'
+			|| str[i] == ' ' || str[i] == '\n'
 			|| str[i] == '\r' || str[i] == '\v'))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
@@ -43,4 +44,18 @@ unsigned long	get_time(void)
 
 	gettimeofday(&time, NULL);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
+int	error(t_data *data, char *msg)
+{
+	int	i;
+
+	i = 0;
+	free_all(data);
+	while (msg[i] != '\0')
+	{
+		write(2, &msg[i], 1);
+		i++;
+	}
+	return (EXIT_FAILURE);
 }

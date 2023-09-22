@@ -3,7 +3,7 @@ NAME = philo
 SRCS = main.c threads.c used_f.c used_f2.c routing.c
 OBJS = $(SRCS:.c=.o)
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 all: $(NAME)

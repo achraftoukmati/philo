@@ -47,15 +47,12 @@ void	*routing(void *arg)
 		thinking(data);
 		if (data->n_philos == 1)
 			break ;
-		eating(data);	
+		eating(data);
 		pthread_mutex_lock(&data->meals_mutex);
 		data->time_now = get_time();
 		pthread_mutex_unlock(&data->meals_mutex);
 		sleeping(data);
-		// check_data(data->data_ptr);
 		data->meals_n++;
-		// if(not_dead(data))
-		// 	check_data(data->data_ptr);
 	}
 	return (NULL);
 }
